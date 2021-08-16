@@ -1,4 +1,4 @@
-module github.com/PVJE/aws-vpc.git
+module github.com/PVJE/vpc.git
 
 go 1.16
 
