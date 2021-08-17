@@ -42,23 +42,27 @@ func readFile(cfg *Config, file_name_read string) {
 }
 
 func MyVPC(file_name string) {
-	var cfg Config
-	readFile(&cfg, file_name)
-	var ctx *pulumi.Context
-	for i := range cfg.Vpc {
-		ec2.NewVpc(ctx, string(cfg.Vpc[i].Name), &ec2.VpcArgs{
-			AssignGeneratedIpv6CidrBlock: pulumi.Bool(false),
-			CidrBlock:                    pulumi.String(string(cfg.Vpc[0].Cidr_block)),
-			//CidrBlock:          pulumi.String(string("10.9.48.64/27")),
-			EnableDnsSupport:   pulumi.Bool(true),
-			EnableDnsHostnames: pulumi.Bool(bool(cfg.Vpc[i].DnsHostnames)),
-			InstanceTenancy:    pulumi.String("default"),
-			Tags: pulumi.StringMap{
-				"Name":        pulumi.String(string(cfg.Vpc[i].Name)),
-				"Project":     pulumi.String(string(cfg.Tags.Project)),
-				"Project-env": pulumi.String(string(cfg.Tags.Project_env)),
-			},
-		}, pulumi.Protect(false))
+	pulumi.Run(func(ctx *pulumi.Context) error {
+		var cfg Config
+		readFile(&cfg, file_name)
+		// var ctx *pulumi.Context
+		for i := range cfg.Vpc {
+			ec2.NewVpc(ctx, string(cfg.Vpc[i].Name), &ec2.VpcArgs{
+				AssignGeneratedIpv6CidrBlock: pulumi.Bool(false),
+				CidrBlock:                    pulumi.String(string(cfg.Vpc[0].Cidr_block)),
+				//CidrBlock:          pulumi.String(string("10.9.48.64/27")),
+				EnableDnsSupport:   pulumi.Bool(true),
+				EnableDnsHostnames: pulumi.Bool(bool(cfg.Vpc[i].DnsHostnames)),
+				InstanceTenancy:    pulumi.String("default"),
+				Tags: pulumi.StringMap{
+					"Name":        pulumi.String(string(cfg.Vpc[i].Name)),
+					"Project":     pulumi.String(string(cfg.Tags.Project)),
+					"Project-env": pulumi.String(string(cfg.Tags.Project_env)),
+				},
+			}, pulumi.Protect(false))
 
-	}
+		}
+		return nil
+	})
+
 }
