@@ -14,6 +14,7 @@ type Config struct {
 		Project     string `yaml:"Project"`
 		Project_env string `yaml:"Project_env"`
 	}
+
 	Vpc []struct {
 		Name         string `yaml:"Name"`
 		Cidr_block   string `yaml:"Cidr_block"`
