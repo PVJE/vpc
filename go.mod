@@ -1,6 +1,6 @@
 module github.com/pvje/vpc
 
-go 1.16
+go 1.14
 
 require (
 	github.com/pulumi/pulumi-aws/sdk/v4 v4.15.0
