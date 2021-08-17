@@ -1,4 +1,4 @@
-package vpc
+package myvpc
 
 import (
 	"fmt"
