@@ -1,4 +1,4 @@
-package myvpc
+package vpc
 
 import (
 	"fmt"
@@ -41,7 +41,7 @@ func readFile(cfg *Config, file_name_read string) {
 	}
 }
 
-func myVPC(file_name string) {
+func MyVPC(file_name string) {
 	var cfg Config
 	readFile(&cfg, file_name)
 	var ctx *pulumi.Context
