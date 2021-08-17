@@ -39,7 +39,6 @@ func readFile(cfg *Config, file_name_read string) {
 	if err != nil {
 		processError(err)
 	}
-
 }
 
 func newVPC(file_name string) {
