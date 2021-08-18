@@ -58,8 +58,8 @@ func CreateVPC(file_name string, tags map[string]string) {
 				InstanceTenancy:    pulumi.String("default"),
 				Tags: pulumi.StringMap{
 					"Name":        pulumi.String(string(cfg.Vpc[i].Name)),
-					"Project":     pulumi.String(string(tags["Project"])),
-					"Project-env": pulumi.String(string(tags["Project_env"])),
+					"Project":     pulumi.String(string(tags["Project"].(string))),
+					"Project-env": pulumi.String(string(tags["Project_env"].(string))),
 					// "Name": pulumi.String(string(cfg.Vpc[i].Name)),
 					// "Project":     pulumi.String(string(cfg.Tags.Project)),
 					// "Project-env": pulumi.String(string(cfg.Tags.Project_env)),
