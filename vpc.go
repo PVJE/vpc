@@ -51,14 +51,14 @@ func CreateVPC(file_name string, tags map[string]string) {
 		for i := range cfg.Vpc {
 			id, err := ec2.NewVpc(ctx, string("VPC_"+strconv.Itoa(i)), &ec2.VpcArgs{
 				AssignGeneratedIpv6CidrBlock: pulumi.Bool(false),
-				CidrBlock:                    pulumi.String(string(cfg.Vpc[0].Cidr_block)),
+				CidrBlock:                    pulumi.String(string(cfg.Vpc[i].Cidr_block)),
 				//CidrBlock:          pulumi.String(string("10.9.48.64/27")),
 				EnableDnsSupport:   pulumi.Bool(true),
 				EnableDnsHostnames: pulumi.Bool(bool(cfg.Vpc[i].DnsHostnames)),
 				InstanceTenancy:    pulumi.String("default"),
 				Tags: pulumi.StringMap{
 					"Name":        pulumi.String(string(cfg.Vpc[i].Name)),
-					"Project":     pulumi.String(string("omg")),
+					"Project":     pulumi.String(string(tags["Project"])),
 					"Project-env": pulumi.String(string(tags["Project_env"])),
 					// "Name": pulumi.String(string(cfg.Vpc[i].Name)),
 					// "Project":     pulumi.String(string(cfg.Tags.Project)),
