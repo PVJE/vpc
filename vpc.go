@@ -42,14 +42,11 @@ func readFile(cfg *Config, file_name_read string) {
 	}
 }
 
-func MyVPC(file_name string) {
+func CreateVPC(file_name string) {
 	pulumi.Run(func(ctx *pulumi.Context) error {
 		var cfg Config
 		readFile(&cfg, file_name)
-
-		// var ctx *pulumi.Context
 		for i := range cfg.Vpc {
-			// func_name := cfg.Vpc[i].Name
 			_, err := ec2.NewVpc(ctx, string("My_VPC_"+strconv.Itoa(i)), &ec2.VpcArgs{
 				AssignGeneratedIpv6CidrBlock: pulumi.Bool(false),
 				CidrBlock:                    pulumi.String(string(cfg.Vpc[0].Cidr_block)),
