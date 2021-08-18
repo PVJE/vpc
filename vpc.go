@@ -49,7 +49,7 @@ func CreateVPC(file_name string) {
 		readFile(&cfg, file_name)
 		// id := make([]string, len(cfg.Vpc))
 		for i := range cfg.Vpc {
-			id, err := ec2.NewVpc(ctx, string(cfg.Vpc[i].Name+strconv.Itoa(i)), &ec2.VpcArgs{
+			id, err := ec2.NewVpc(ctx, string("test"+strconv.Itoa(i)), &ec2.VpcArgs{
 				AssignGeneratedIpv6CidrBlock: pulumi.Bool(false),
 				CidrBlock:                    pulumi.String(string(cfg.Vpc[0].Cidr_block)),
 				//CidrBlock:          pulumi.String(string("10.9.48.64/27")),
