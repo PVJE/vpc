@@ -42,7 +42,7 @@ func readFile(cfg *Config, file_name_read string) {
 	}
 }
 
-func CreateVPC(file_name string) {
+func CreateVPC(file_name string, tags map[string]string) {
 	pulumi.Run(func(ctx *pulumi.Context) error {
 		var cfg Config
 		// var id [len(cfg.Vpc)]string
@@ -57,7 +57,10 @@ func CreateVPC(file_name string) {
 				EnableDnsHostnames: pulumi.Bool(bool(cfg.Vpc[i].DnsHostnames)),
 				InstanceTenancy:    pulumi.String("default"),
 				Tags: pulumi.StringMap{
-					"Name": pulumi.String(string(cfg.Vpc[i].Name)),
+					"Name":        pulumi.String(string(cfg.Vpc[i].Name)),
+					"Project":     pulumi.String(string(tags["Project"])),
+					"Project-env": pulumi.String(string(tags["Project_env"])),
+					// "Name": pulumi.String(string(cfg.Vpc[i].Name)),
 					// "Project":     pulumi.String(string(cfg.Tags.Project)),
 					// "Project-env": pulumi.String(string(cfg.Tags.Project_env)),
 				},
