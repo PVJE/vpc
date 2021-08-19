@@ -65,9 +65,9 @@ func CreateVPC(file_name string, tags map[string]string, ctx *pulumi.Context) {
 				// "Project-env": pulumi.String(string(cfg.Tags.Project_env)),
 			},
 		}, pulumi.Protect(false))
-		if err != nil {
-			return err
-		}
+		// if err != nil {
+		// 	return err
+		// }
 		//ctx.Export("VPC_id", id.ID())
 	}
 	// 	return nil
