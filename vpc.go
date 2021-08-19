@@ -11,7 +11,7 @@ type Vpc struct {
 	DnsHostnames bool
 }
 
-func CreateVPC(file_name string, tags map[string]string, ctx *pulumi.Context, vpc Vpc) (*ec2.Vpc, error) {
+func CreateVPC(file_name string, tags map[string]string, ctx *pulumi.Context, vpc *Vpc) (*ec2.Vpc, error) {
 	//pulumi.Run(func(ctx *pulumi.Context) error {
 	//id := make([]string, len(Vpc))
 	id, err := ec2.NewVpc(ctx, string(vpc.Name), &ec2.VpcArgs{
