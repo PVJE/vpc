@@ -54,10 +54,10 @@ func CreateVPC(file_name string, tags map[string]string) {
 				CidrBlock:                    pulumi.String(string(cfg.Vpc[i].Cidr_block)),
 				//CidrBlock:          pulumi.String(string("10.9.48.64/27")),
 				EnableDnsSupport:   pulumi.Bool(true),
-				EnableDnsHostnames: pulumi.Bool(bool(cfg.Vpc[i].dnsHostnames)),
+				EnableDnsHostnames: pulumi.Bool(bool(cfg.Vpc[i].DnsHostnames)),
 				InstanceTenancy:    pulumi.String("default"),
 				Tags: pulumi.StringMap{
-					"Name":        pulumi.String(string(cfg.Vpc[i].name)),
+					"Name":        pulumi.String(string(cfg.Vpc[i].Name)),
 					"Project":     pulumi.String(string(tags["Project"])),
 					"Project-env": pulumi.String(string(tags["Project_env"])),
 					// "Name": pulumi.String(string(cfg.Vpc[i].Name)),
