@@ -1,95 +1,60 @@
 package vpc
 
 import (
-	"fmt"
-	"os"
-	"strconv"
-
 	"github.com/pulumi/pulumi-aws/sdk/v4/go/aws/ec2"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-	"gopkg.in/yaml.v2"
 )
 
-type Config struct {
-	// Tags struct {
-	// 	Project     string `yaml:"Project"`
-	// 	Project_env string `yaml:"Project_env"`
-	// }
-
-	Vpc []struct {
-		Name         string `yaml:"name"`
-		Cidr_block   string `yaml:"cidr_block"`
-		DnsHostnames bool   `yaml:"dnsHostnames"`
-	}
+type Vpc struct {
+	Name         string
+	Cidr_block   string
+	DnsHostnames bool
 }
 
-func processError(err error) {
-	fmt.Println(err)
-	os.Exit(2)
-}
-
-func readFile(cfg *Config, file_name_read string) {
-	f, err := os.Open(file_name_read)
-	if err != nil {
-		processError(err)
-	}
-	defer f.Close()
-
-	decoder := yaml.NewDecoder(f)
-	err = decoder.Decode(cfg)
-	if err != nil {
-		processError(err)
-	}
-}
-
-func CreateVPC(file_name string, tags map[string]string, ctx *pulumi.Context) {
+func CreateVPC(file_name string, tags map[string]string, ctx *pulumi.Context, vpc Vpc) {
 	//pulumi.Run(func(ctx *pulumi.Context) error {
-	var cfg Config
-	// var id [len(cfg.Vpc)]string
-	readFile(&cfg, file_name)
-	// id := make([]string, len(cfg.Vpc))
-	for i := range cfg.Vpc {
-		ec2.NewVpc(ctx, string("VPC_"+strconv.Itoa(i)), &ec2.VpcArgs{
-			AssignGeneratedIpv6CidrBlock: pulumi.Bool(false),
-			CidrBlock:                    pulumi.String(string(cfg.Vpc[i].Cidr_block)),
-			//CidrBlock:          pulumi.String(string("10.9.48.64/27")),
-			EnableDnsSupport:   pulumi.Bool(true),
-			EnableDnsHostnames: pulumi.Bool(bool(cfg.Vpc[i].DnsHostnames)),
-			InstanceTenancy:    pulumi.String("default"),
-			Tags: pulumi.StringMap{
-				"Name":        pulumi.String(string(cfg.Vpc[i].Name)),
-				"Project":     pulumi.String(string(tags["Project"])),
-				"Project-env": pulumi.String(string(tags["Project_env"])),
-				// "Name": pulumi.String(string(cfg.Vpc[i].Name)),
-				// "Project":     pulumi.String(string(cfg.Tags.Project)),
-				// "Project-env": pulumi.String(string(cfg.Tags.Project_env)),
-			},
-		}, pulumi.Protect(false))
-		// if err != nil {
-		// 	return err
-		// }
-		//ctx.Export("VPC_id", id.ID())
-	}
+	// id := make([]string, len(Vpc))
+	ec2.NewVpc(ctx, string(vpc.Name), &ec2.VpcArgs{
+		AssignGeneratedIpv6CidrBlock: pulumi.Bool(false),
+		CidrBlock:                    pulumi.String(string(vpc.Cidr_block)),
+		//CidrBlock:          pulumi.String(string("10.9.48.64/27")),
+		EnableDnsSupport:   pulumi.Bool(true),
+		EnableDnsHostnames: pulumi.Bool(bool(vpc.DnsHostnames)),
+		InstanceTenancy:    pulumi.String("default"),
+		Tags: pulumi.StringMap{
+			"Name":        pulumi.String(string(vpc.Name)),
+			"Project":     pulumi.String(string(tags["Project"])),
+			"Project-env": pulumi.String(string(tags["Project_env"])),
+			// "Name": pulumi.String(string(Vpc[i].Name)),
+			// "Project":     pulumi.String(string(Tags.Project)),
+			// "Project-env": pulumi.String(string(Tags.Project_env)),
+		},
+	}, pulumi.Protect(false))
+	// if err != nil {
+	// 	return err
+	// }
+	//ctx.Export("VPC_id", id.ID())
+
 	// 	return nil
 	// })
 
 	// pulumi.Run(func(ctx *pulumi.Context) {
 	// 	var cfg Config
-	// 	// var id [len(cfg.Vpc)]string
+	// 	// var id [len(Vpc)]string
 	// 	readFile(&cfg, file_name)
-	// 	// id := make([]string, len(cfg.Vpc))
-	// 	for i := range cfg.Vpc {
+	// 	// id := make([]string, len(Vpc))
+	// 	for i := range Vpc {
 	// 		id, err := ec2.NewVpc(ctx, string("My_VPC_"+strconv.Itoa(i)), &ec2.VpcArgs{
 	// 			AssignGeneratedIpv6CidrBlock: pulumi.Bool(false),
-	// 			CidrBlock:                    pulumi.String(string(cfg.Vpc[0].Cidr_block)),
+	// 			CidrBlock:                    pulumi.String(string(Vpc[0].Cidr_block)),
 	// 			//CidrBlock:          pulumi.String(string("10.9.48.64/27")),
 	// 			EnableDnsSupport:   pulumi.Bool(true),
-	// 			EnableDnsHostnames: pulumi.Bool(bool(cfg.Vpc[i].DnsHostnames)),
+	// 			EnableDnsHostnames: pulumi.Bool(bool(Vpc[i].DnsHostnames)),
 	// 			InstanceTenancy:    pulumi.String("default"),
 	// 			Tags: pulumi.StringMap{
-	// 				"Name":        pulumi.String(string(cfg.Vpc[i].Name)),
-	// 				"Project":     pulumi.String(string(cfg.Tags.Project)),
-	// 				"Project-env": pulumi.String(string(cfg.Tags.Project_env)),
+	// 				"Name":        pulumi.String(string(Vpc[i].Name)),
+	// 				"Project":     pulumi.String(string(Tags.Project)),
+	// 				"Project-env": pulumi.String(string(Tags.Project_env)),
 	// 			},
 	// 		}, pulumi.Protect(false))
 	// 		if err != nil {
