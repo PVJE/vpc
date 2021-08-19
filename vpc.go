@@ -42,36 +42,36 @@ func readFile(cfg *Config, file_name_read string) {
 	}
 }
 
-func CreateVPC(file_name string, tags map[string]string) {
-	pulumi.Run(func(ctx *pulumi.Context) error {
-		var cfg Config
-		// var id [len(cfg.Vpc)]string
-		readFile(&cfg, file_name)
-		// id := make([]string, len(cfg.Vpc))
-		for i := range cfg.Vpc {
-			id, err := ec2.NewVpc(ctx, string("VPC_"+strconv.Itoa(i)), &ec2.VpcArgs{
-				AssignGeneratedIpv6CidrBlock: pulumi.Bool(false),
-				CidrBlock:                    pulumi.String(string(cfg.Vpc[i].Cidr_block)),
-				//CidrBlock:          pulumi.String(string("10.9.48.64/27")),
-				EnableDnsSupport:   pulumi.Bool(true),
-				EnableDnsHostnames: pulumi.Bool(bool(cfg.Vpc[i].DnsHostnames)),
-				InstanceTenancy:    pulumi.String("default"),
-				Tags: pulumi.StringMap{
-					"Name":        pulumi.String(string(cfg.Vpc[i].Name)),
-					"Project":     pulumi.String(string(tags["Project"])),
-					"Project-env": pulumi.String(string(tags["Project_env"])),
-					// "Name": pulumi.String(string(cfg.Vpc[i].Name)),
-					// "Project":     pulumi.String(string(cfg.Tags.Project)),
-					// "Project-env": pulumi.String(string(cfg.Tags.Project_env)),
-				},
-			}, pulumi.Protect(false))
-			if err != nil {
-				return err
-			}
-			ctx.Export("VPC_id", id.ID())
+func CreateVPC(file_name string, tags map[string]string, ctx *pulumi.Context) {
+	//pulumi.Run(func(ctx *pulumi.Context) error {
+	var cfg Config
+	// var id [len(cfg.Vpc)]string
+	readFile(&cfg, file_name)
+	// id := make([]string, len(cfg.Vpc))
+	for i := range cfg.Vpc {
+		ec2.NewVpc(ctx, string("VPC_"+strconv.Itoa(i)), &ec2.VpcArgs{
+			AssignGeneratedIpv6CidrBlock: pulumi.Bool(false),
+			CidrBlock:                    pulumi.String(string(cfg.Vpc[i].Cidr_block)),
+			//CidrBlock:          pulumi.String(string("10.9.48.64/27")),
+			EnableDnsSupport:   pulumi.Bool(true),
+			EnableDnsHostnames: pulumi.Bool(bool(cfg.Vpc[i].DnsHostnames)),
+			InstanceTenancy:    pulumi.String("default"),
+			Tags: pulumi.StringMap{
+				"Name":        pulumi.String(string(cfg.Vpc[i].Name)),
+				"Project":     pulumi.String(string(tags["Project"])),
+				"Project-env": pulumi.String(string(tags["Project_env"])),
+				// "Name": pulumi.String(string(cfg.Vpc[i].Name)),
+				// "Project":     pulumi.String(string(cfg.Tags.Project)),
+				// "Project-env": pulumi.String(string(cfg.Tags.Project_env)),
+			},
+		}, pulumi.Protect(false))
+		if err != nil {
+			return err
 		}
-		return nil
-	})
+		//ctx.Export("VPC_id", id.ID())
+	}
+	// 	return nil
+	// })
 
 	// pulumi.Run(func(ctx *pulumi.Context) {
 	// 	var cfg Config
