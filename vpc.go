@@ -11,10 +11,14 @@ type Vpc struct {
 	DnsHostnames bool
 }
 
-func CreateVPC(file_name string, tags map[string]string, ctx *pulumi.Context, vpc *Vpc) (*ec2.Vpc, error) {
+type Output struct {
+	Id interface{}
+}
+
+func CreateVPC(file_name string, tags map[string]string, ctx *pulumi.Context, vpc *Vpc) (*Output, error) {
 	//pulumi.Run(func(ctx *pulumi.Context) error {
 	//id := make([]string, len(Vpc))
-	id, err := ec2.NewVpc(ctx, string(vpc.Name), &ec2.VpcArgs{
+	myvpc, err := ec2.NewVpc(ctx, string(vpc.Name), &ec2.VpcArgs{
 		AssignGeneratedIpv6CidrBlock: pulumi.Bool(false),
 		CidrBlock:                    pulumi.String(string(vpc.Cidr_block)),
 		//CidrBlock:          pulumi.String(string("10.9.48.64/27")),
@@ -31,7 +35,7 @@ func CreateVPC(file_name string, tags map[string]string, ctx *pulumi.Context, vp
 		},
 	}, pulumi.Protect(false))
 	if err != nil {
-		return id, err
+		return nil, err
 	}
 	//ctx.Export("VPC_id", id.ID())
 
@@ -62,7 +66,9 @@ func CreateVPC(file_name string, tags map[string]string, ctx *pulumi.Context, vp
 	// 		}
 
 	// 	}
-	return id, nil
+	output := new(Output)
+	output.Id = myvpc.ID()
+	return output, nil
 	// })
 
 }
