@@ -18,7 +18,7 @@ type Config struct {
 
 	Vpc []struct {
 		Name         string `yaml:"name"`
-		Cidr_block   string `yaml:"Cidr_block"`
+		Cidr_block   string `yaml:"cidr_block"`
 		DnsHostnames bool   `yaml:"dnsHostnames"`
 	}
 }
