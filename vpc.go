@@ -15,7 +15,8 @@ import (
 // }
 
 type Output struct {
-	Id interface{}
+	Id string
+	//Id interface{}
 }
 
 func CreateVPC(vpc_name string, vpc_cidr string, vpc_dnshostanme bool, tags map[string]string, ctx *pulumi.Context) (*Output, error) {
@@ -39,7 +40,7 @@ func CreateVPC(vpc_name string, vpc_cidr string, vpc_dnshostanme bool, tags map[
 			// "Project":     pulumi.String(string(Tags.Project)),
 			// "Project-env": pulumi.String(string(Tags.Project_env)),
 		},
-	}, pulumi.Protect(false))
+	}, pulumi.Protect(false)).ToStringOutput()
 	if err != nil {
 		return nil, err
 	}
@@ -73,7 +74,7 @@ func CreateVPC(vpc_name string, vpc_cidr string, vpc_dnshostanme bool, tags map[
 
 	// 	}
 	output := new(Output)
-	output.Id = myvpc.ID()
+	output.Id = myvpc.ID().ToStringOutput
 	return output, nil
 	// })
 
