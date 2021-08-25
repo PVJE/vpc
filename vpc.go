@@ -6,27 +6,33 @@ import (
 )
 
 type Vpc struct {
-	Name         string
-	Cidr_block   string
-	DnsHostnames bool
+	// Name         string
+	// Cidr_block   string
+	// DnsHostnames bool
+	Name         interface{}
+	Cidr_block   interface{}
+	DnsHostnames interface{}
 }
 
 type Output struct {
 	Id interface{}
 }
 
-func CreateVPC(file_name string, tags map[string]string, ctx *pulumi.Context, vpc *Vpc) (*Output, error) {
+func CreateVPC(file_name string, tags map[string]string, ctx *pulumi.Context, vpc Vpc) (*Output, error) {
 	//pulumi.Run(func(ctx *pulumi.Context) error {
 	//id := make([]string, len(Vpc))
-	myvpc, err := ec2.NewVpc(ctx, string(vpc.Name), &ec2.VpcArgs{
+	name := vpc.Name.(string)
+	cidr_block := vpc.Cidr_block.(string)
+	dnsHostnames := vpc.Name.(bool)
+	myvpc, err := ec2.NewVpc(ctx, string(name), &ec2.VpcArgs{
 		AssignGeneratedIpv6CidrBlock: pulumi.Bool(false),
-		CidrBlock:                    pulumi.String(string(vpc.Cidr_block)),
+		CidrBlock:                    pulumi.String(string(cidr_block)),
 		//CidrBlock:          pulumi.String(string("10.9.48.64/27")),
 		EnableDnsSupport:   pulumi.Bool(true),
-		EnableDnsHostnames: pulumi.Bool(bool(vpc.DnsHostnames)),
+		EnableDnsHostnames: pulumi.Bool(bool(dnsHostnames)),
 		InstanceTenancy:    pulumi.String("default"),
 		Tags: pulumi.StringMap{
-			"Name":        pulumi.String(string(vpc.Name)),
+			"Name":        pulumi.String(string(name)),
 			"Project":     pulumi.String(string(tags["Project"])),
 			"Project-env": pulumi.String(string(tags["Project_env"])),
 			// "Name": pulumi.String(string(Vpc[i].Name)),
