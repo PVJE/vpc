@@ -73,7 +73,7 @@ func CreateVPC(vpc_name string, vpc_cidr string, vpc_dnshostanme bool, tags map[
 
 	// 	}
 	output := new(Output)
-	output.Id = myvpc.ID()
+	output.Id = myvpc
 	return output, nil
 	// })
 
