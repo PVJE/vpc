@@ -14,11 +14,11 @@ import (
 // 	DnsHostnames interface{}
 // }
 
-type Output struct {
-	out *ec2.Vpc
-}
+// type Output struct {
+// 	out *ec2.Vpc
+// }
 
-func CreateVPC(vpc_name string, vpc_cidr string, vpc_dnshostanme bool, tags map[string]string, ctx *pulumi.Context) (*Output, error) {
+func CreateVPC(vpc_name string, vpc_cidr string, vpc_dnshostanme bool, tags map[string]string, ctx *pulumi.Context) (*ec2.Vpc, error) {
 	//pulumi.Run(func(ctx *pulumi.Context) error {
 	//id := make([]string, len(Vpc))
 	// name := vpc.Name.(string)
@@ -72,9 +72,9 @@ func CreateVPC(vpc_name string, vpc_cidr string, vpc_dnshostanme bool, tags map[
 	// 		}
 
 	// 	}
-	output := new(Output)
-	output.out = myvpc
-	return output, nil
+	// output := new(Output)
+	// output.out = myvpc
+	return myvpc, nil
 	// })
 
 }
