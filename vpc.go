@@ -15,7 +15,7 @@ import (
 // }
 
 type Output struct {
-	out interface{}
+	out *ec2.Vpc
 }
 
 func CreateVPC(vpc_name string, vpc_cidr string, vpc_dnshostanme bool, tags map[string]string, ctx *pulumi.Context) (*Output, error) {
