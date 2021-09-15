@@ -12,7 +12,7 @@ func CreateVPC(vpc_name string, vpc_cidr string, vpc_dnshostanme bool, tags_key 
 	//map[string]pulumi.String
 	//tagsMap = pulumi.Map(map[string]pulumi.Input{})
 	for k := range tags_key {
-		tagsMap[tags_key[k]] = pulumi.String(tags_key[k])
+		tagsMap[tags_key[k]] = pulumi.String(tags_values[k])
 	}
 	my_vpc, err = ec2.NewVpc(ctx, string(vpc_name), &ec2.VpcArgs{
 		AssignGeneratedIpv6CidrBlock: pulumi.Bool(false),
