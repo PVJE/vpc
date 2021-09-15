@@ -17,7 +17,7 @@ func CreateVPC(vpc_name string, vpc_cidr string, vpc_dnshostanme bool, tags_key 
 			InstanceTenancy:              pulumi.String("default"),
 			Tags: pulumi.StringMap{
 				tags_key[i]: pulumi.String(string(tags_values[i])),
-				"pulumi":    pulumi.String(string(vpc_name)),
+				//"pulumi":    pulumi.String(string(vpc_name)),
 				// "Project":     pulumi.String(string(tags["Project"])),
 				// "Project-env": pulumi.String(string(tags["Project_env"])),
 			},
