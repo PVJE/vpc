@@ -17,6 +17,7 @@ require (
 	github.com/opentracing/opentracing-go v1.2.0 // indirect
 	github.com/pulumi/pulumi-aws/sdk/v4 v4.20.0
 	github.com/pulumi/pulumi/sdk/v3 v3.12.0
+	github.com/pvje/pulumihelper v0.0.9
 	github.com/sabhiram/go-gitignore v0.0.0-20201211210132-54b8a0bf510f // indirect
 	github.com/sergi/go-diff v1.2.0 // indirect
 	github.com/spf13/cobra v1.2.1 // indirect
