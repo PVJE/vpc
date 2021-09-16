@@ -6,7 +6,7 @@ import (
 	ph "github.com/pvje/pulumihelper"
 )
 
-func CreateVPC(vpc_name string, vpc_assign_generated_ipv6_cidr_block bool, vpc_cidr string, vpc_enable_dns_support bool, vpc_dns_hostanme bool, vpc_instance_tenancy string, tags []string, ctx *pulumi.Context) (*ec2.Vpc, error) {
+func CreateVPC(vpc_name string, vpc_assign_generated_ipv6_cidr_block bool, vpc_cidr string, vpc_enable_dns_support bool, vpc_dns_hostanme bool, vpc_instance_tenancy string, tags map[string]string, ctx *pulumi.Context) (*ec2.Vpc, error) {
 	// tagsMap := make(pulumi.StringMap)
 	// for k := range tags_key {
 	// 	tagsMap[tags_key[k]] = pulumi.String(tags_values[k])
